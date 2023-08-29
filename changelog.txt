@@ -1,0 +1,4 @@
+1. Created HTML structure
+2. Created Todo App. (finally)
+3. + Added task counter
+4. + ...
