@@ -81,6 +81,13 @@ h1 {
 		list-style: none;
 		background-color: $light;
 	}
+	.counter-text {
+		margin-top: 1em;
+		display: inline-block;
+		padding: 0.4em 1.8em;
+		border-radius: 8px;
+		background-color: $light;
+	}
 }
 
 .tools {

@@ -3,6 +3,8 @@ let errorInfo
 let addBtn
 let ulList
 
+let allTodos
+
 let popup
 let popupInfo
 let todoToEdit
@@ -19,6 +21,8 @@ const main = () => {
 const prepareDOMElements = () => {
 	todoInput = document.querySelector('.todo-input')
 	errorInfo = document.querySelector('.error-info')
+	counterText = document.querySelector('.counter-text')
+	counterValue = document.querySelector('.counter-value')
 	addBtn = document.querySelector('.btn-add')
 	ulList = document.querySelector('.todolist ul')
 
@@ -35,19 +39,26 @@ const prepareDOMEvents = () => {
 	popupCloseBtn.addEventListener('click', closePopup)
 	popupAddBtn.addEventListener('click', changeTodoText)
 	todoInput.addEventListener('keyup', enterKeyCheck)
+	todoInput.addEventListener('keyup', enterKeyCheck)
 }
 
 const addNewTodo = () => {
-	if (todoInput.value !== '') {
-		newTodo = document.createElement('li')
-		newTodo.textContent = todoInput.value
-		ulList.append(newTodo)
-		createToolsArea(newTodo)
-
-		todoInput.value = ''
-		errorInfo.textContent = ''
+	allTodos = ulList.querySelectorAll('li')
+	if (allTodos.length >= 30) {
+		errorInfo.textContent = 'Nie możesz dodać więcej zadań do listy.'
 	} else {
-		errorInfo.textContent = 'Wpisz treść zadania!'
+		if (todoInput.value !== '') {
+			newTodo = document.createElement('li')
+			newTodo.textContent = todoInput.value
+			ulList.append(newTodo)
+			createToolsArea(newTodo)
+
+			todoInput.value = ''
+			errorInfo.textContent = ''
+			counter()
+		} else {
+			errorInfo.textContent = 'Wpisz treść zadania!'
+		}
 	}
 }
 
@@ -105,17 +116,22 @@ const changeTodoText = () => {
 
 const deleteTodo = e => {
 	deleteTodoBtn = e.target.closest('li').remove()
-	const allTodos = ulList.querySelectorAll('li')
+	allTodos = ulList.querySelectorAll('li')
 	if (allTodos.length === 0) {
 		errorInfo.textContent = 'Brak zadań na liście.'
 	}
+	counter()
 }
 
 const enterKeyCheck = e => {
 	if (e.key === 'Enter') {
-		console.log('enter')
 		addNewTodo()
 	}
+}
+
+const counter = () => {
+	allTodos = ulList.querySelectorAll('li')
+	counterValue.textContent = allTodos.length
 }
 
 document.addEventListener('DOMContentLoaded', main)
